@@ -5,7 +5,9 @@ package test.dao;
  */
 import java.util.List;
 
+import test.model.entity.AddressEntity;
 import test.model.entity.EmailEntity;
+import test.model.entity.TelefonEntity;
 import test.model.entity.UserEntity;
 
 import javax.transaction.Transactional;
@@ -41,16 +43,28 @@ public class UserDao {
         getSession().update(user);
         return;
     }
-    public UserEntity getByEmail(String email) {
+    public UserEntity getUser(Integer userID) {
         return (UserEntity) getSession().createQuery(
-                "from user where email = :email")
-                .setParameter("email", email)
+                "from user where email = :userID and active= '1' ")
+                .setParameter("userID", userID)
                 .uniqueResult();
     }
     public EmailEntity getEmail(Integer userID){
         return (EmailEntity) getSession().createQuery(
                 "from email where userId= :userID")
-                .setParameter("userId",userID)
+                .setParameter("userID", userID)
+                .uniqueResult();
+    }
+    public AddressEntity getAddres(Integer userID){
+        return (AddressEntity) getSession().createQuery(
+                "from address where userId= :userID")
+                .setParameter("userID",userID)
+                .uniqueResult();
+    }
+    public TelefonEntity getTelefon(Integer userID){
+        return (TelefonEntity) getSession().createQuery(
+                "from Telefon where userId= :userID")
+                .setParameter("userID", userID)
                 .uniqueResult();
     }
 
