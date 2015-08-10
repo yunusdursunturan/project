@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import com.google.common.base.Objects;
+import test.dao.UserDao;
 import test.model.type.UserType;
 
 import java.util.Date;
@@ -65,6 +66,8 @@ public class UserEntity {
     }
 
     public UserEntity(UserType user) {
+        UserDao users= new UserDao();
+        UserEntity template = users.getByEmail(user.getEmail());
 
         this.userId = user.getUserId();
         this.userName = user.getUserName();
