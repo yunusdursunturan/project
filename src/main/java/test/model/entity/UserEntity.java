@@ -3,10 +3,9 @@ package test.model.entity;
 /**
  * Created by yturan on 07/08/15.
  */
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import com.google.common.base.Objects;
 import test.dao.UserDao;
 import test.model.type.UserType;
@@ -16,10 +15,15 @@ import java.util.Date;
 @Entity
 @Table(name = "user", catalog = "TestData")
 public class UserEntity {
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
+    @NotNull
     @Column(name = "userId")
     private Integer userId;
-
+    @NotNull
     @Column(name = "name")
     private String userName;
 
@@ -67,7 +71,7 @@ public class UserEntity {
 
     public UserEntity(UserType user) {
         UserDao users= new UserDao();
-        UserEntity template = users.getByEmail(user.getEmail());
+        UserEntity template = users.getUser(user.getUserId());
 
         this.userId = user.getUserId();
         this.userName = user.getUserName();
@@ -86,6 +90,13 @@ public class UserEntity {
         this.postaKodu = user.getPostaKodu();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
